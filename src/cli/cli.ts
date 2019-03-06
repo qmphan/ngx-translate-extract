@@ -48,8 +48,8 @@ export const cli = yargs
 	.option('marker', {
 		alias: 'm',
 		describe: 'Extract strings passed to a marker function',
-		default: false,
-		type: 'string'
+		default: [],
+		type: 'array'
 	})
 	.option('format', {
 		alias: 'f',
@@ -109,10 +109,13 @@ const parsers: ParserInterface[] = [
 	new ServiceParser()
 ];
 if (cli.marker) {
-	parsers.push(new FunctionParser({
-		identifier: cli.marker
-	}));
+	cli.marker.forEach( (marker: string) => {
+		parsers.push(new FunctionParser({
+			identifier: marker
+		}));
+	});
 }
+
 extract.setParsers(parsers);
 
 extract.execute();
