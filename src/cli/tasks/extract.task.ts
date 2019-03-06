@@ -66,6 +66,9 @@ export class ExtractTask implements TaskInterface {
 		let collection: TranslationCollection = new TranslationCollection();
 		this._input.forEach(dir => {
 			this._readDir(dir, this._options.patterns).forEach(path => {
+				if (path.match(/node_modules/) {
+				    return;
+				}
 				this._options.verbose && this._out(chalk.gray('- %s'), path);
 				const contents: string = fs.readFileSync(path, 'utf-8');
 				this._parsers.forEach((parser: ParserInterface) => {
